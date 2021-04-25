@@ -19,7 +19,7 @@ docker run eichenberg/full-cycle-rocks
 - Possuir Git instalado
 - Possuir o docker instalado no linux (ou Windows10 com WSL2)
 
-## Build local:
+## Como executar (opção 1):
 
 Abra um terminal na pasta raiz do projeto, e execute o script *build-image.sh*.
 
@@ -27,8 +27,28 @@ Abra um terminal na pasta raiz do projeto, e execute o script *build-image.sh*.
 sh build-image.sh
 ```
 
+## Como executar (opção 2):
+
+Abra um terminal na pasta raiz do projeto, e execute os comandos abaixo.
+
+```
+# Executa o arquivo Dockerfile para montar uma imagem
+docker build -t full-cycle-rocks .
+
+# remove a imagem golang:alpine utilizada para compilar o script 'main.go'
+docker image rm golang:alpine -f
+
+# executa o container 'full-cycle-rocks' e o remove após sua execução
+docker run --rm full-cycle-rocks
+```
+
 ### Um ponto interessante:
 
-- Você não precisa ter o ambiente da GoLang instalado em sua máquina.
-- O script *build-image.sh* irá baixar uma imagem docker com com a goLang, compartilhar a pasta /src com o container docker, compilar o arquivo *src/main.go* e ao final irá remover o container baixado.
-- Logo após a compilação do arquivo *src/main.go* o script *build-image.sh* irá criar um container com menos de 2MB contendo o executável *main* gerado no passo anterior, e irá executá-lo antes de encerrar a execução do container construido.
+- Você não precisa ter o ambiente da GoLang instalado em sua máquina apenas o Docker.
+- O script *build-image.sh* irá baixar uma imagem docker com com a goLang, compartilhar a pasta /src com o container docker, compilar o arquivo *src/main.go*.
+- Logo após a compilação do arquivo *src/main.go* o *Dockerfile* irá criar um container com menos de 2MB contendo o executável *main* gerado no passo anterior, e irá executá-lo antes de encerrar a execução do container construido.
+
+# Baixar a imagem no Dockerhub
+
+Imagem disponível no endereço:
+[https://hub.docker.com/repository/docker/eichenberg/full-cycle-rocks]
